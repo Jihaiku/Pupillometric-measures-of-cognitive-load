@@ -1,13 +1,24 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Mar 31 23:54:57 2024
+#!/usr/bin/env python
+# coding: utf-8
 
-@author: cdhye
-"""
+# # <center> Data Preprocessor </center>
+# 
+# ## Required Imports
+
+# In[6]:
+
+
 import pandas as pd
 import os
 import glob
 import warnings
+
+
+# ## Class Code
+# This is the first quarter of the entire project. It is meant to preprocess the data that will be used for everything else. While it didn't necessarily needed to be well documented and modular, it is for the sake of readability and future iterations. 
+
+# In[7]:
+
 
 class Pypil_Dataframe_Processor:
     """
@@ -105,7 +116,7 @@ class Pypil_Dataframe_Processor:
                 all_dir.append(os.path.join(root, dir_name))
         return all_dir
     
-    def process_csv_files(self, columns_to_keep=["world_index", "diameter"], 
+    def process_csv_files(self, columns_to_keep=["world_timestamp", "world_index", "diameter"], 
                           file_suffix='_trimmed', output_folder='trimmed_files', 
                           additional_preprocessing=False):
         """
@@ -208,3 +219,28 @@ class Pypil_Dataframe_Processor:
                         dec_err_file.add(csv_file)
                         file_name = os.path.basename(csv_file)
                         print(f"\nError reading file: {file_name}. \nPlease try a different encoding.")
+
+
+# In[14]:
+
+
+# os.chdir("whatever your directory is")
+
+
+# In[12]:
+
+
+processor = Pypil_Dataframe_Processor()
+
+# This is used to make the files without any additional preprocessing
+processor.process_csv_files()
+
+
+# In[13]:
+
+
+# This is used to groupby world_index for each file so that there
+# is only one world_index per number
+processor.process_csv_files(output_folder="grouped_trimmed_folder",
+                            additional_preprocessing=True)
+
